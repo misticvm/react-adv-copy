@@ -26,13 +26,6 @@ export const useShoppingCart = () => {
       // Borramos producto
       const { [product.id]: toDelete, ...restOfObject } = preShoppingCart
       return { ...restOfObject }
-
-      // if (count === 0) {
-      //   // Borrar con la destructuración de objetos
-      //   const { [product.id]: toDelete, ...restOfShoppingCart } =
-      //     preShoppingCart
-      //   return { ...restOfShoppingCart }
-      // }
     })
   }
   return { products, shoppingCart, onProductCountChange }
