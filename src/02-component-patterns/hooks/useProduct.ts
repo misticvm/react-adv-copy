@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect } from "react"
 import { Product, onChangeArgs } from "../interfaces/interfaces"
 
 interface useProductArgs {
@@ -12,19 +12,13 @@ export const useProduct = ({
   product,
   value = 0,
 }: useProductArgs) => {
-  // console.log({value})
+  console.log({ value })
   const [counter, setCounter] = useState(value)
 
-  // Para saber si el componente donde se llama a la función onChange está controlado o no usamos la función onChange transformándola en un booleano
-  const isControlledRef = useRef(!!onChange)
-
-  const increaseBy = (value: number) => {
+  const increaseBy = (num: number) => {
     // console.log("isControlled", isControlledRef.current)
 
-    if (isControlledRef.current) {
-      return onChange!({ count: value, product })
-    }
-    const newCounter = Math.max(counter + value, 0)
+    const newCounter = Math.max(counter + num, 0)
     setCounter(newCounter)
     onChange && onChange({ count: newCounter, product })
   }

@@ -8,31 +8,18 @@ export const useShoppingCart = () => {
   }>({})
 
   const onProductCountChange = ({ count, product }: onChangeArgs) => {
+    // console.log({ count }) // Devuelve 1, 2, 3, 4...n
     setShoppingCart((preShoppingCart) => {
-      // console.log({ count })
-
-      // Producto por defecto en carrito (si no hay producto en el carrito, lo inicializamos a 0)
-      const productInCart: ProductInCart = preShoppingCart[product.id] || {
-        ...product,
-        count: 0,
+      // Eliminamos producto
+      if (count === 0) {
+        // Borrar con la destructuración de objetos
+        const { [product.id]: toDelete, ...restOfShoppingCart } =
+          preShoppingCart
+        return { ...restOfShoppingCart }
       }
 
       // Añadimos producto
-      if (Math.max(productInCart.count + count, 0) > 0) {
-        productInCart.count += count
-        return { ...preShoppingCart, [product.id]: { ...productInCart } }
-      }
-
-      // Borramos producto
-      const { [product.id]: toDelete, ...restOfObject } = preShoppingCart
-      return { ...restOfObject }
-
-      // if (count === 0) {
-      //   // Borrar con la destructuración de objetos
-      //   const { [product.id]: toDelete, ...restOfShoppingCart } =
-      //     preShoppingCart
-      //   return { ...restOfShoppingCart }
-      // }
+      return { ...preShoppingCart, [product.id]: { ...product, count } }
     })
   }
   return { products, shoppingCart, onProductCountChange }
